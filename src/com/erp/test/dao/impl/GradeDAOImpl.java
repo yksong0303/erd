@@ -22,13 +22,12 @@ public class GradeDAOImpl implements GradeDAO {
 		
 			try {
 				con = Conn.open();
-				String sql = "insert into grade(grd_no,grd_name,grd_desc) values(?,?,?)";
+				String sql = "insert into grade values((select nvl(max(grd_no),0)+1 from grade),?,?)";
 				ps = con.prepareStatement(sql);
-				ps.setInt(1,(int)grade.get("grd_no"));
-				ps.setObject(2, grade.get("grd_name").toString());
-				ps.setObject(3, grade.get("grd_desc").toString());
+				ps.setObject(1, grade.get("grd_name"));
+				ps.setObject(2, grade.get("grd_desc"));
 				result = ps.executeUpdate();
-				
+				con.commit();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -55,18 +54,20 @@ public class GradeDAOImpl implements GradeDAO {
 		
 		try {
 			con = Conn.open();
-			String sql = "update grade set grd_name = ?, grd_desc = ? where grd_no =?";
+			String sql = "update grade set grd_name=?, grd_desc=? where grd_no =?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, grade.get("grd_name").toString());
-			ps.setString(2, grade.get("grd_desc").toString());
-			ps.setInt(3, (int)grade.get("grd_no"));
+			ps.setObject(1, grade.get("grd_name"));
+			ps.setObject(2, grade.get("grd_desc"));
+			ps.setObject(3, grade.get("grd_no"));
 			result = ps.executeUpdate();
-			
+			con.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			Conn.close(ps,con);
 		}
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class GradeDAOImpl implements GradeDAO {
 			ps= con.prepareStatement(sql);
 			ps.setObject(1, grade.get("grd_no"));
 			result = ps.executeUpdate();
-			
+			con.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +94,7 @@ public class GradeDAOImpl implements GradeDAO {
 				e1.printStackTrace();
 			}
 		}
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -103,16 +104,16 @@ public class GradeDAOImpl implements GradeDAO {
 		ResultSet rs = null;
 		try {
 			con = Conn.open();
-			String sql = "select grd_name, grd_desc from where grd_no=?";
+			String sql = "select * from grade where grd_no=?";
 			ps=con.prepareStatement(sql);
-			ps.setInt(1,(int)grade.get("grd_no"));
+			ps.setObject(1 , grade.get("grd_no"));
 			rs = ps.executeQuery();
-			while(rs.next()) {
-				Map<String,Object> map = new HashMap<>();
-				map.put("grd_no",rs.getInt("grd_no"));
-				map.put("grd_name",rs.getString("grd_name"));
-				map.put("grd_desc",rs.getString("grd_desc"));
-				return map;
+			if(rs.next()) {
+				Map<String,Object> g = new HashMap<>();
+				g.put("grd_no",rs.getInt("grd_no"));
+				g.put("grd_name",rs.getString("grd_name"));
+				g.put("grd_desc",rs.getString("grd_desc"));
+				return g;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

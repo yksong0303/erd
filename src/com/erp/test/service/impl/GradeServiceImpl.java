@@ -1,6 +1,6 @@
 package com.erp.test.service.impl;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +8,7 @@ import java.util.Map;
 import com.erp.test.dao.GradeDAO;
 import com.erp.test.dao.impl.GradeDAOImpl;
 import com.erp.test.service.GradeService;
-import com.member.lib.service.BookService;
-import com.member.lib.service.impl.BookServiceImpl;
+
 
 public class GradeServiceImpl implements GradeService {
 	private GradeDAO gdao = new GradeDAOImpl();
@@ -25,10 +24,7 @@ public class GradeServiceImpl implements GradeService {
 	public Map<String, Object> updateGrade(Map<String, Object> grade) {
 		int result = gdao.updateGrade(grade);
 		Map<String,Object> rMap= new HashMap<>();
-		rMap.put("msg","수정오류");
-		if(result!=1) {
-			rMap.put("msg","수정완료");
-		}
+		rMap.put("msg",(result==1)?"grade수정 성공":"grade수정 실패");
 		rMap.put("cnt",result);
 		return rMap;
 	}
@@ -36,7 +32,7 @@ public class GradeServiceImpl implements GradeService {
 	public Map<String, Object> deleteGrade(Map<String, Object> grade) {
 		int result = gdao.deleteGrade(grade);
 		Map<String,Object> rMap = new HashMap<>();
-		rMap.put("msg",(result==1)?"삭제실패":"삭제완료");
+		rMap.put("msg",(result==1)?"삭제완료":"삭제실패");
 		rMap.put("cnt",result);
 		return rMap;
 	}
