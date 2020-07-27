@@ -11,7 +11,7 @@ import java.util.Map;
 
 import com.erp.test.common.Conn;
 import com.erp.test.dao.EmployeeDAO;
-import com.erp.test.service.EmployeeService;
+
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
@@ -21,13 +21,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		int result = 0;
 		try {
 			con = Conn.open();
-			String sql = "insert into employee(emp_no, emp_name, emp_credat, emp_salary, grd_no, emp_active)\r\n" + 
-					"values(seq_emp_no.nextval, ?, sysdate, ?, ?, ?)";
+			String sql = "insert into employee(emp_no, emp_name, emp_credat, emp_salary, grd_no,)\r\n" + 
+					"values(seq_emp_no.nextval, ?, sysdate, ?, ?)";
 			ps = con.prepareStatement(sql);
 			ps.setObject(1, employee.get("emp_name"));
 			ps.setObject(2, employee.get("emp_salary"));
 			ps.setObject(3, employee.get("grd_no"));
-			ps.setObject(4, employee.get("emp_active"));
+			
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			
@@ -40,8 +40,36 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public int updateEmployee(Map<String, Object> employee) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = Conn.open();
+			String sql = "update employee set emp_name=?, emp_salary=?, grd_no=? where emp_no=? ";
+			ps = con.prepareStatement(sql);
+			ps.setObject(1, employee.get("emp_name"));
+			ps.setObject(2, employee.get("emp_salary"));
+			ps.setObject(3, employee.get("grd_no"));
+			ps.setInt(4, (int)employee.get("emp_no"));
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps!=null) {
+					ps.close();
+				}
+				if(con!=null) {
+					con.close();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		 return result;
+  
+
 	}
 
 	@Override
@@ -52,7 +80,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			con = Conn.open();
-			String sql = "delete from employee where emp_no= ?";
+			String sql = "update employee set emp_active=? where emp_no=?";
 			ps = con.prepareStatement(sql);
 			ps.setObject(1, employee.get("emp_no"));
 			result = ps.executeUpdate();

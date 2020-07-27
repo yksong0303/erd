@@ -22,8 +22,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Map<String, Object> updateEmployee(Map<String, Object> employee) {
-		// TODO Auto-generated method stub
-		return null;
+		int result = edao.updateEmployee(employee);
+		Map<String,Object> rMap = new HashMap<String, Object>();
+		rMap.put("msg",(result==1)?"emp입력 성공":"emp입력 실패");
+		rMap.put("cnt",result);
+		
+		return rMap;
 	}
 
 	@Override

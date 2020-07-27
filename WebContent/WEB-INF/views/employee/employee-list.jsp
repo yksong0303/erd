@@ -8,6 +8,7 @@
 </head>
 <body>
 ㅅㅂ놈아 나와라
+
 <table border='1'>
 	<tr>
 		<th>사원번호</th>
@@ -15,8 +16,12 @@
 		<th>입사일</th>
 		<th>연봉</th>
 		<th>계급</th>
-		<th>사원근무여부</th>
 	</tr>	
+		<c:if test="${empty gradeList}">
+		<tr>
+			<td colspan="3">내용이 없습니다</td>
+		</tr>
+	</c:if>
 	<c:forEach items="${emp}" var="emp">
 		<tr>
 			<td>${emp.emp_no}</td>
@@ -24,7 +29,11 @@
 			<td>${emp.emp_credat}</td>
 			<td>${emp.emp_salary}</td>
 			<td>${emp.grd_no}</td>
-			<td>${emp.emp_active}</td>
+			<td>
+				<c:forEach items="${grdList}" var="grd">
+				
+				</c:forEach>
+			</td>
 		</tr>
 	</c:forEach>	
 </table>
