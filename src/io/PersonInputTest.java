@@ -14,44 +14,43 @@ import java.util.Map;
 
 public class PersonInputTest {
 	public static void main(String[] args) {
-		File f = new File("c:\\person.txt");
-		List<Map<String,String>> personList = new ArrayList<>();
-		List<String> keyList = new ArrayList<String>();
-		try {
-			FileInputStream fis = new FileInputStream(f);
-			InputStreamReader isr = new InputStreamReader(fis,"UTF-8");
-			BufferedReader br = new BufferedReader(isr);
-			String str;
-			while((str=br.readLine())!=null) {
-				if(keyList.size()==0) {
-					String[] keys = str.split(",");
-					for(String key : keys) {
-						keyList.add(key);
-					}
-				}else{
-					Map<String,String> person = new HashMap<String, String>();
-					String[] values = str.split(",");
-					for(int i=0;i<keyList.size();i++) {
-						person.put(keyList.get(i),values[i]);
-					}
-					personList.add(person);
-	
-				}
-				
-			}
-			System.out.println(personList);
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		  File f = new File("c:\\person.txt");
+	      List<Map<String, String>> pList = new ArrayList<>();
+	      List<String> kList = new ArrayList<>();
+	      try {
+	         FileInputStream fis = new FileInputStream(f);
+	         InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+	         BufferedReader br = new BufferedReader(isr);
+	         String str;
+	         while ((str = br.readLine()) != null) {
+	            if (kList.size() == 0) {
+	               String[] keys = str.split(",");
+	               for (String key : keys) {
+	                  kList.add(key);
+	               }
+	            } else {
+	               Map<String, String> pMap = new HashMap<>();
+	               String[] values = str.split(",");
+	               for (int i = 0; i < kList.size(); i++) {
+	                  pMap.put(kList.get(i), values[i]);
+	                  pList.add(pMap);
+	               }
+
+	            }
+	         }
+	         System.out.println(pList);
+	      } catch (FileNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (UnsupportedEncodingException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+
+	   }
+
 	}
-}
 

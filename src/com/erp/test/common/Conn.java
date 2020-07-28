@@ -19,7 +19,9 @@ public class Conn {
 		}
 		public static Connection open() {
 			try {
-				return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/xe","c##test","test");
+				Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/xe","c##test","test");
+				conn.setAutoCommit(false);
+				return conn;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
