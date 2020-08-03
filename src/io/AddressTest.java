@@ -21,7 +21,7 @@ public class AddressTest {
 
 	public static void main(String[] args) throws SQLException {
 		String keyStr = "DONG_CODE\r\n" + "SIDO\r\n" + "GUGUN\r\n" + "DONG_NAME\r\n" + "LEE_NAME\r\n" + "IS_MNT\r\n"
-				+ "JIBUN\r\n" + "SUB_SIBUN\r\n" + "ROAD_CODE\r\n" + "ROAD_NAME\r\n" + "IS_BASE\r\n" + "BUILD_NUM\r\n"
+				+ "JIBUN\r\n" + "SUB_JIBUN\r\n" + "ROAD_CODE\r\n" + "ROAD_NAME\r\n" + "IS_BASE\r\n" + "BUILD_NUM\r\n"
 				+ "SUB_BUILD_NUM\r\n" + "BUILDING_NAME\r\n" + "DETAIL_BUILDING_NAME\r\n" + "ADDR_CODE";
 		String keys[] = keyStr.split("\r\n");
 
@@ -63,15 +63,28 @@ public class AddressTest {
 			sql +=value;
 			Connection con = Conn.open();
 			PreparedStatement ps = con.prepareStatement(sql);
+			int cnt =1;
 			for(Map<String,String> row:list) {
 				for(int i=0;i<keys.length;i++) {
 					ps.setNString((i+1), row.get(keys[i]));
 				}
-				ps.executeUpdate();
+				ps.addBatch();
+				if(cnt%1000==0) {
+					ps.executeBatch();
+					ps.clearBatch();
+				}
+				cnt++;
+			
 			}
+			if(list.size()%1000!=0) {
+				ps.executeBatch();
+				ps.clearBatch();
+			}
+			
+			
 			con.commit();
 			long eTime = System.currentTimeMillis();
-			System.out.println(("실행시간 : "+(eTime-sTime)));
+			System.out.println(("실행시간 : "+((eTime-sTime)/1000)+"초"));
 			System.out.println(fL+"입력 끝");
 			}
 		} catch (FileNotFoundException e) {
