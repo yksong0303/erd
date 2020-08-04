@@ -31,7 +31,7 @@ public class SelectAddressServlet extends HttpServlet {
 
 	         }
 	      }
-	      RequestDispatcher rd = request.getRequestDispatcher("/views/div");
+	      RequestDispatcher rd = request.getRequestDispatcher("/views/div2");
 	      rd.forward(request, response);
 	      ;
 

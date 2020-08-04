@@ -37,7 +37,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>SelectAddressServlet</servlet-name>
-  	<url-pattern>/div/*</url-pattern>
+  	<url-pattern>/div2/*</url-pattern>
   </servlet-mapping>
   
   <jsp-config>
