@@ -2,27 +2,64 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로또 생성기</title>
 </head>
 <style>
-body{
-background-image:url('https://img.insight.co.kr/static/2018/10/31/700/of72vdv6j729m81vb9cm.jpg');
-background-size: 1500px 1500px;
+body {
+	background-image:
+		url('https://fimg4.pann.com/new/download.jsp?FileID=42879082');
+	background-size: 500px 500px;
+}
+
+div.number {
+	display: inline-block;
+	background: #aaa;
+	color: white;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	line-height: 100px;
+	font-size: 64px;
+	text-align: center;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+div.numset {
+	text-align: center;
+	padding: 10px;
 }
 </style>
 <body>
-<script>
+	<h1>로또번호 추첨기</h1>
 
-//document.write(Math.floor(mNum)+'<br>');
-//document.write(Math.round(mNum)+'<br>');
-//document.write(Math.ceil(mNum)+'<br>');
-//var rNum =Math.ceil(mNum);
-for(var i=1;i<7;i++){
-	var mNum = Math.random()*45+1;
-	var rNum = Math.round(mNum);
-	document.write(rNum+",");
-};
 
-</script>
+	<div id="LOTTO"></div>
+	<script>
+		//document.write(Math.floor(mNum)+'<br>');
+		//document.write(Math.round(mNum)+'<br>');
+		//document.write(Math.ceil(mNum)+'<br>');
+		//var rNum =Math.ceil(mNum);
+		
+		function rNum() {
+			return Math.round(Math.random() * 45 + 1);
+		}; //로또번호 생성기
+
+		function getNum() {
+			var LOTTO = document.getElementById("LOTTO");
+			var numbers = [];
+			while(numbers.length<6){
+				if(numbers.indexOf(rNum())<0){
+					numbers.push(rNum());
+				}
+				
+			}
+			return numbers;
+			
+		};
+		document.write(getNum());
+	
+	</script>
+		<button onclick="getNum()">생성하기</button>
 </body>
 </html>
