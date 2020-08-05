@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+div.gugudan{
+	border : 24px ridge #2F4F4F;
+	border-color: red yellow green blue;
+	width : 50px;
+	text-align : center;
+	font-size : 20px;
+	float : left;
+	margin : 3px;
+	font-family:"궁서체";	
+	
+}
+</style>
+</head>
+<body>
+
+단:   <input type="text" id="dan" >
+   <button onclick="gugu()">구구단 생성</button>
+<div class = "gugudan" id ="rDiv">
+</div>
+<script>
+function gugu(){
+   var gu = document.querySelector("#dan").value;
+   var str ="<table border = '1'>";
+   for(i=1;i<=9;i++){
+      str += "<tr>";
+      for(j=1; j<=gu; j++){
+         str += "<td>"+i+"x"+j+"="+i*j+"</td>";
+      }
+      str += "</tr>";
+   }
+   document.querySelector('#rDiv').innerHTML = str;
+};
+</script>
+   
+<img src ="https://kaka0.net/data/file/humor/3743923229_nOk4rTlM_IMG_1617.JPG">
+</body>
+</html>
